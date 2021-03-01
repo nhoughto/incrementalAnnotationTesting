@@ -12,9 +12,19 @@ repositories {
 }
 
 dependencies {
-    // Micronaut (micronaut.io)
-    annotationProcessor group: 'io.micronaut', name: 'micronaut-inject-java', version: '1.2.10'
+	annotationProcessor(platform("io.micronaut:micronaut-bom:2.3.3"))
+    annotationProcessor("io.micronaut:micronaut-inject-java")
 
-//    annotationProcessor group: 'com.google.auto.value', name: 'auto-value', version: '1.7'
+    implementation(platform("io.micronaut:micronaut-bom:2.3.3"))
+    implementation("io.micronaut:micronaut-inject")
+    implementation("io.micronaut:micronaut-runtime")
 
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.annotationProcessorPath = configurations.annotationProcessor
+    options.compilerArgs = [
+            '-Amicronaut.processing.incremental=true'
+    ]
 }
